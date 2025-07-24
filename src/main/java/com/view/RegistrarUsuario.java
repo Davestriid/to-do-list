@@ -39,6 +39,8 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtRegistrarContrasena = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtRegistrarNumeroTelefono = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +75,14 @@ public class RegistrarUsuario extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Teléfono");
+
+        txtRegistrarNumeroTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRegistrarNumeroTelefonoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,19 +97,21 @@ public class RegistrarUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtRegistrarCorreo)
                             .addComponent(txtRegistrarUsuario)
-                            .addComponent(txtRegistrarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                            .addComponent(txtRegistrarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtRegistrarNumeroTelefono))))
                 .addGap(30, 30, 30))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRegistrarse)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(84, 84, 84))
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,9 +132,13 @@ public class RegistrarUsuario extends javax.swing.JFrame {
                     .addComponent(txtRegistrarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtRegistrarNumeroTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrarse)
                     .addComponent(jButton1))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,12 +154,13 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         
         // 1. Obtener los datos de los campos de texto:
         String nombreUsuario = txtRegistrarUsuario.getText().trim(); 
-        String correoElectronico = txtRegistrarCorreo.getText().trim(); 
+        String correoElectronico = txtRegistrarCorreo.getText().trim();
+        String numeroTelefono = txtRegistrarNumeroTelefono.getText().trim();
         char[] contrasenaChars = txtRegistrarContrasena.getPassword();
         
         
         // 2. Revisar si algún campo está vacío (esto es básico para que no guardes datos en blanco)
-        if (nombreUsuario.isEmpty() || correoElectronico.isEmpty() || contrasenaChars.length == 0) {
+        if (nombreUsuario.isEmpty() || correoElectronico.isEmpty() || numeroTelefono.isEmpty() || contrasenaChars.length == 0) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
             // Limpia el arreglo de caracteres incluso si la validación falla
             java.util.Arrays.fill(contrasenaChars, ' '); 
@@ -157,7 +174,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
 
         try {
             // 4. Llamar al método 'createUsuario' de tu DAO para guardar los datos
-            usuarioDAO.createUsuario(nombreUsuario, correoElectronico, contrasena);
+            usuarioDAO.createUsuario(nombreUsuario, correoElectronico, numeroTelefono, contrasena);
             
             // 5. Si todo salió bien, mostrar un mensaje de éxito
             JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -182,7 +199,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
             if (e.getMessage() != null && e.getMessage().contains("ConstraintViolationException")) {
                 mensajeError = "El correo electrónico ingresado ya está registrado.";
             } else {
-                mensajeError += "\nDetalle: " + e.getMessage(); // Muestra el error técnico para que lo veas
+                mensajeError += "\nDetalle: " + e.getMessage(); 
             }
             JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
         }    
@@ -195,6 +212,10 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtRegistrarNumeroTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegistrarNumeroTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRegistrarNumeroTelefonoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,8 +259,10 @@ public class RegistrarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField txtRegistrarContrasena;
     private javax.swing.JTextField txtRegistrarCorreo;
+    private javax.swing.JTextField txtRegistrarNumeroTelefono;
     private javax.swing.JTextField txtRegistrarUsuario;
     // End of variables declaration//GEN-END:variables
 }

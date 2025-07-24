@@ -140,10 +140,10 @@ public class InicioDeSesion extends javax.swing.JFrame {
             Usuario usuarioAutenticado = inicioSesionDAO.autenticarUsuario(nombreUsuario, contrasena);
 
             // Evaluar el resultado y mostrar la respuesta al usuario
-            if (usuarioAutenticado != null) {
+            if (usuarioAutenticado != null ) {
                 // La autenticación fue exitosa
                 JOptionPane.showMessageDialog(this, "¡Bienvenid@, " + usuarioAutenticado.getNombre() + "!");
-                ListadoDeTareas listareas = new ListadoDeTareas(); 
+                VistaAdministrador listareas = new VistaAdministrador(); 
                 listareas.setVisible(true);
                 this.dispose();
                 // Aquí puedes agregar la lógica para cerrar la ventana de inicio de sesión
@@ -152,7 +152,7 @@ public class InicioDeSesion extends javax.swing.JFrame {
             }else {
             // La autenticación falló
             intentosFallidos++; // Incrementar el contador de intentos
-
+            
             if (intentosFallidos >= INTENTOS_MAXIMOS) {
                 JOptionPane.showMessageDialog(this, "Has excedido el número de intentos. La aplicación se cerrará.", "Límite de Intentos Excedido", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);

@@ -27,17 +27,28 @@ public class UsuarioDAO {
     }
 
     //Crear Usuario
-    public void createUsuario(String nombre, String email, String contraseña) {
+    
+       
+    public void createUsuarioAdmin(String nombre, String email, String telefono, String tipoDeRol, String contraseña) {
+
         EntityManager em = DbManager.getEntityManager();
         em.getTransaction().begin();
         Usuario u = new Usuario();
 
         u.setNombre(nombre);
         u.setEmail(email);
+        u.setTelefono(telefono);
         u.setContrasena(contraseña);
-
+        u.setRol(tipoDeRol);
+        
         em.persist(u);
         em.getTransaction().commit();
+        em.close();
+    }
+    
+    
+    public void createUsuario(String nombre, String email, String telefono, String contraseña) {
+    createUsuarioAdmin(nombre, email, telefono, "usuario", contraseña);
     }
 
     //Edita Usuario

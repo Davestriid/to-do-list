@@ -78,7 +78,7 @@ public class AgregarComentario extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        jLabel3.setText("CREAR NUEVO COMENTARIO");
+        jLabel3.setText("NUEVO COMENTARIO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,7 +90,9 @@ public class AgregarComentario extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(atrasComentarioBtn)
                         .addGap(148, 148, 148)
-                        .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,10 +111,7 @@ public class AgregarComentario extends javax.swing.JFrame {
                                         .addGap(49, 49, 49)
                                         .addComponent(btnEditarComentario))
                                     .addComponent(jLabel2)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addComponent(jLabel3)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,9 +123,9 @@ public class AgregarComentario extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtAgregarComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -146,7 +145,7 @@ public class AgregarComentario extends javax.swing.JFrame {
 
     private void atrasComentarioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasComentarioBtnActionPerformed
         // TODO add your handling code here:
-        ListadoDeTareas listar = new ListadoDeTareas(); 
+        VistaAdministrador listar = new VistaAdministrador(); 
         listar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_atrasComentarioBtnActionPerformed

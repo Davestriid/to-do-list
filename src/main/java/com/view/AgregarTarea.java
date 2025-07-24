@@ -282,7 +282,7 @@ public class AgregarTarea extends javax.swing.JFrame {
 
     private void btnCancelarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarTareaActionPerformed
         // TODO add your handling code here:
-        ListadoDeTareas tareasList = new ListadoDeTareas();
+        VistaAdministrador tareasList = new VistaAdministrador();
         tareasList.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarTareaActionPerformed
@@ -343,7 +343,7 @@ public class AgregarTarea extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Tarea guardada exitosamente.");
             }
 
-            new ListadoDeTareas().setVisible(true);
+            new VistaAdministrador().setVisible(true);
             this.dispose();
 
         } catch (Exception e) {

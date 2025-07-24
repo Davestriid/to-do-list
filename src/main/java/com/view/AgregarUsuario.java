@@ -47,6 +47,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
         tablaUsuarios = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         txtAgregarContrasenaUsuario = new javax.swing.JPasswordField();
+        jLabel5 = new javax.swing.JLabel();
+        txtAgregarNumerTelefono = new javax.swing.JTextField();
+        boxRol = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -99,6 +103,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         jLabel6.setText("AGREGAR NUEVO USUARIO");
 
+        jLabel5.setText("Teléfono");
+
+        jLabel7.setText("Rol");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,26 +125,30 @@ public class AgregarUsuario extends javax.swing.JFrame {
                         .addGap(84, 84, 84)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtAgregarCorreoUsuario)
-                                    .addComponent(txtAgregarNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(txtAgregarContrasenaUsuario)))
+                                .addGap(75, 75, 75)
+                                .addComponent(jLabel6))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnAgregarUsuario)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEditarUsuario)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnEliminarUsuario)))))
+                                .addComponent(btnEliminarUsuario))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addGap(42, 42, 42)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(boxRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtAgregarCorreoUsuario)
+                                        .addComponent(txtAgregarNombreUsuario)
+                                        .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(txtAgregarNumerTelefono)))))))
                 .addGap(0, 26, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +162,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
                         .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -164,7 +176,15 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtAgregarNumerTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(boxRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarUsuario)
                     .addComponent(btnEditarUsuario)
@@ -179,7 +199,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private void atrasUsuariosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasUsuariosBtnActionPerformed
         // TODO add your handling code here:
 
-        ListadoDeTareas listar = new ListadoDeTareas();
+        VistaAdministrador listar = new VistaAdministrador();
         listar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_atrasUsuariosBtnActionPerformed
@@ -190,10 +210,12 @@ public class AgregarUsuario extends javax.swing.JFrame {
         // 1. Obtener los datos de los campos de texto:
         String nombreUsuario = txtAgregarNombreUsuario.getText().trim();
         String correoElectronico = txtAgregarCorreoUsuario.getText().trim();
+        String numeroTelefono = txtAgregarNumerTelefono.getText().trim();
         char[] contrasenaChars = txtAgregarContrasenaUsuario.getPassword();
+        String tipoDeRol = boxRol.getSelectedItem().toString();
 
         // 2. Revisar si algún campo está vacío (esto es básico para que no guardes datos en blanco)
-        if (nombreUsuario.isEmpty() || correoElectronico.isEmpty() || contrasenaChars.length == 0) {
+        if (nombreUsuario.isEmpty() || correoElectronico.isEmpty() || numeroTelefono.isEmpty() || tipoDeRol.isEmpty() || contrasenaChars.length == 0) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
             java.util.Arrays.fill(contrasenaChars, ' ');
             return; // Detiene la ejecución aquí
@@ -207,12 +229,13 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
         try {
             // 4. Llamar al método 'createUsuario' de tu DAO para guardar los datos
-            usuarioDAO.createUsuario(nombreUsuario, correoElectronico, contrasenaString);
+            usuarioDAO.createUsuarioAdmin(nombreUsuario, correoElectronico, numeroTelefono, tipoDeRol, contrasenaString);
 
             // 5. Si todo salió bien, mostrar un mensaje de éxito
             JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             // 6. Abrir la ventana de inicio de sesión y cerrar la actual
+            
             InicioDeSesion inicioSesion = new InicioDeSesion();
             inicioSesion.setVisible(true);
             this.dispose();
@@ -267,6 +290,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasUsuariosBtn;
+    private javax.swing.JComboBox<String> boxRol;
     private javax.swing.JButton btnAgregarUsuario;
     private javax.swing.JButton btnEditarUsuario;
     private javax.swing.JButton btnEliminarUsuario;
@@ -275,11 +299,14 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaUsuarios;
     private javax.swing.JPasswordField txtAgregarContrasenaUsuario;
     private javax.swing.JTextField txtAgregarCorreoUsuario;
     private javax.swing.JTextField txtAgregarNombreUsuario;
+    private javax.swing.JTextField txtAgregarNumerTelefono;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,7 +15,7 @@ import javax.persistence.TypedQuery;
  * @author Davestriid
  */
 public class PrioridadDAO {
-       
+    
     //Ver Prioridads   
     public List<Prioridad> VerPrioridads() {
         EntityManager em = DbManager.getEntityManager();

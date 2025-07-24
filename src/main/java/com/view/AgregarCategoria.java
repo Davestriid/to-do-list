@@ -142,7 +142,7 @@ public class AgregarCategoria extends javax.swing.JFrame {
     private void atrasCategoriaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasCategoriaBtnActionPerformed
         // TODO add your handling code here:
         
-        ListadoDeTareas listar = new ListadoDeTareas(); 
+        VistaAdministrador listar = new VistaAdministrador(); 
         listar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_atrasCategoriaBtnActionPerformed

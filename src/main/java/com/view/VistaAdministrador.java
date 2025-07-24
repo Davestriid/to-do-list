@@ -9,22 +9,19 @@ import com.models.Tarea;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
 /**
  *  
  * @author Davestriid
  */
-public class ListadoDeTareas extends javax.swing.JFrame {
+public class VistaAdministrador extends javax.swing.JFrame {
 
     /**
      * Creates new form Listado_de_tareas
      */
-    
-    
+       
     private List<Tarea> listaDeTareas;
 
-    public ListadoDeTareas() {
+    public VistaAdministrador() {
         initComponents();
         cargarListaDeTareas();
         
@@ -41,7 +38,6 @@ public class ListadoDeTareas extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         btnEliminarTarea = new javax.swing.JButton();
-        btnTerminarTarea = new javax.swing.JButton();
         btnFormularioTarea = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaTareas = new javax.swing.JTable();
@@ -49,6 +45,7 @@ public class ListadoDeTareas extends javax.swing.JFrame {
         btnVerComentarios = new javax.swing.JButton();
         btnVerUsuarios = new javax.swing.JButton();
         btnEditarTarea = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,14 +57,6 @@ public class ListadoDeTareas extends javax.swing.JFrame {
         btnEliminarTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarTareaActionPerformed(evt);
-            }
-        });
-
-        btnTerminarTarea.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        btnTerminarTarea.setText("Terminar");
-        btnTerminarTarea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTerminarTareaActionPerformed(evt);
             }
         });
 
@@ -124,6 +113,14 @@ public class ListadoDeTareas extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jButton1.setText("ESTADO");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,23 +134,21 @@ public class ListadoDeTareas extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(btnVerComentarios)
                             .addComponent(btnVerCategorias)
-                            .addComponent(btnVerUsuarios)))
+                            .addComponent(btnVerUsuarios)
+                            .addComponent(jButton1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(238, 238, 238)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(btnFormularioTarea)
-                                .addGap(65, 65, 65)
-                                .addComponent(btnEditarTarea)
-                                .addGap(65, 65, 65)
-                                .addComponent(btnEliminarTarea)
-                                .addGap(65, 65, 65)
-                                .addComponent(btnTerminarTarea)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(238, 238, 238)
+                        .addComponent(jLabel1)
+                        .addGap(0, 399, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(btnFormularioTarea)
+                .addGap(65, 65, 65)
+                .addComponent(btnEditarTarea)
+                .addGap(65, 65, 65)
+                .addComponent(btnEliminarTarea)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,9 +159,11 @@ public class ListadoDeTareas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                        .addGap(18, 18, 18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(53, 53, 53)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
                         .addComponent(btnVerUsuarios)
                         .addGap(18, 18, 18)
                         .addComponent(btnVerCategorias)
@@ -174,11 +171,10 @@ public class ListadoDeTareas extends javax.swing.JFrame {
                         .addComponent(btnVerComentarios)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTerminarTarea)
                     .addComponent(btnEliminarTarea)
                     .addComponent(btnEditarTarea)
                     .addComponent(btnFormularioTarea))
-                .addGap(27, 27, 27))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -189,16 +185,18 @@ public class ListadoDeTareas extends javax.swing.JFrame {
         TareaDAO dao = new TareaDAO();
         this.listaDeTareas = dao.obtenerTodasLasTareas(); 
 
-        String[] columnas = {"ID", "Título", "Descripción", "Fecha Vencimiento", "Estado"};
+        String[] columnas = {"ID", "Título", "Usuario","Descripción", "Fecha Vencimiento", "Estado", "Comentarios"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
 
         for (Tarea t : listaDeTareas) {
             Object[] fila = {
                 t.getIdTarea(), 
                 t.getTitulo(),
+                t.getIdUsuario(),
                 t.getDescripcion(),
                 t.getFechaVencimiento(),
-                t.getEstado()
+                t.getEstado(),
+                t.getComentariosList()
             };
             modelo.addRow(fila);
         }
@@ -301,12 +299,9 @@ public class ListadoDeTareas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarTareaActionPerformed
 
-    private void btnTerminarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarTareaActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-    }//GEN-LAST:event_btnTerminarTareaActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,21 +320,27 @@ public class ListadoDeTareas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListadoDeTareas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListadoDeTareas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListadoDeTareas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListadoDeTareas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListadoDeTareas().setVisible(true);
+                new VistaAdministrador().setVisible(true);
             }
         });
     }
@@ -348,10 +349,10 @@ public class ListadoDeTareas extends javax.swing.JFrame {
     private javax.swing.JButton btnEditarTarea;
     private javax.swing.JButton btnEliminarTarea;
     private javax.swing.JButton btnFormularioTarea;
-    private javax.swing.JButton btnTerminarTarea;
     private javax.swing.JButton btnVerCategorias;
     private javax.swing.JButton btnVerComentarios;
     private javax.swing.JButton btnVerUsuarios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaTareas;
