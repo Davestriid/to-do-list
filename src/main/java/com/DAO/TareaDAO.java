@@ -25,16 +25,6 @@ public class TareaDAO {
         }
     }
 
-    // para poder ver todas las tareas
-    public List<Tarea> obtenerTodasLasTareas() {
-        EntityManager em = DbManager.getEntityManager();
-        try {
-            return em.createQuery("SELECT t FROM Tarea t", Tarea.class).getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
     //para actualizar las tareas existentes
     public void actualizarTarea(Tarea tarea) {
         EntityManager em = DbManager.getEntityManager();
@@ -67,7 +57,17 @@ public class TareaDAO {
             em.close();
         }
     }
-
+    
+    // para poder ver todas las tareas
+    public List<Tarea> obtenerTodasLasTareas() {
+        EntityManager em = DbManager.getEntityManager();
+        try {
+            return em.createQuery("SELECT t FROM Tarea t", Tarea.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
     // para buscar una tarea por su id
     public Tarea obtenerTareaPorId(int id) {
         EntityManager em = DbManager.getEntityManager();
@@ -104,4 +104,15 @@ public class TareaDAO {
         em.close();
         return tarea;
     }
+    
+    //para poder contar las tareas
+    public long contarTodasLasTareas() {
+        EntityManager em = DbManager.getEntityManager();
+        try {
+            return (Long) em.createQuery("SELECT COUNT(t) FROM Tarea t").getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
 }
+

@@ -19,11 +19,11 @@ public class VistaAdministrador extends javax.swing.JFrame {
      * Creates new form Listado_de_tareas
      */
        
-    private List<Tarea> listaDeTareas;
 
     public VistaAdministrador() {
         initComponents();
         cargarListaDeTareas();
+        actualizarContadorTareas();
         
     }
 
@@ -46,6 +46,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         btnVerUsuarios = new javax.swing.JButton();
         btnEditarTarea = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        txtNumeroDeTareas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +122,8 @@ public class VistaAdministrador extends javax.swing.JFrame {
             }
         });
 
+        txtNumeroDeTareas.setText(".");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,18 +131,23 @@ public class VistaAdministrador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(btnVerComentarios)
-                            .addComponent(btnVerCategorias)
-                            .addComponent(btnVerUsuarios)
-                            .addComponent(jButton1)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(238, 238, 238)
                         .addComponent(jLabel1)
-                        .addGap(0, 399, Short.MAX_VALUE)))
+                        .addGap(0, 399, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtNumeroDeTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(btnVerComentarios)
+                                    .addComponent(btnVerCategorias)
+                                    .addComponent(btnVerUsuarios)
+                                    .addComponent(jButton1))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(139, 139, 139)
@@ -155,13 +163,11 @@ public class VistaAdministrador extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
+                .addGap(24, 24, 24)
+                .addComponent(txtNumeroDeTareas)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(btnVerUsuarios)
@@ -169,7 +175,9 @@ public class VistaAdministrador extends javax.swing.JFrame {
                         .addComponent(btnVerCategorias)
                         .addGap(18, 18, 18)
                         .addComponent(btnVerComentarios)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 92, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEliminarTarea)
                     .addComponent(btnEditarTarea)
@@ -181,22 +189,23 @@ public class VistaAdministrador extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
+    private List<Tarea> listaDeTareas;
     private void cargarListaDeTareas() {
         TareaDAO dao = new TareaDAO();
         this.listaDeTareas = dao.obtenerTodasLasTareas(); 
 
-        String[] columnas = {"ID", "Título", "Usuario","Descripción", "Fecha Vencimiento", "Estado", "Comentarios"};
+        String[] columnas = {"ID", "Título", "Usuario","Descripción", "Fecha Vencimiento", "Estado"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
 
         for (Tarea t : listaDeTareas) {
             Object[] fila = {
                 t.getIdTarea(), 
                 t.getTitulo(),
-                t.getIdUsuario(),
+                t.getIdUsuario().getNombre(),
                 t.getDescripcion(),
                 t.getFechaVencimiento(),
                 t.getEstado(),
-                t.getComentariosList()
+                
             };
             modelo.addRow(fila);
         }
@@ -210,6 +219,15 @@ public class VistaAdministrador extends javax.swing.JFrame {
         tablaTareas.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaTareas.getColumnModel().getColumn(0).setWidth(0);
     }
+    
+    //para actualizar el contador de las tareas
+    private void actualizarContadorTareas() {
+        TareaDAO tareaDAO = new TareaDAO();
+        long totalTareas = tareaDAO.contarTodasLasTareas();
+        txtNumeroDeTareas.setText("Total de Tareas: " + totalTareas);
+    }
+    
+    
     
     private void btnFormularioTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormularioTareaActionPerformed
         // TODO add your handling code here:
@@ -356,5 +374,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaTareas;
+    private javax.swing.JLabel txtNumeroDeTareas;
     // End of variables declaration//GEN-END:variables
 }

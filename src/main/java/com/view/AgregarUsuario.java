@@ -5,7 +5,10 @@
 package com.view;
 
 import com.DAO.UsuarioDAO;
-
+import com.models.Usuario;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -13,7 +16,7 @@ import com.DAO.UsuarioDAO;
  * @author Davestriid
  */
 
-import javax.swing.JOptionPane;
+
 public class AgregarUsuario extends javax.swing.JFrame {
 
     /**
@@ -21,8 +24,38 @@ public class AgregarUsuario extends javax.swing.JFrame {
      */
     public AgregarUsuario() {
         initComponents();
+        cargarListaDeUsuarios();
     }
 
+       
+    private List<Usuario> listaDeUsuarios;
+    
+    private void cargarListaDeUsuarios() {
+        UsuarioDAO dao = new UsuarioDAO();
+        this.listaDeUsuarios = dao.obtenerTodosLosUsuarios();
+
+        String[] columnas = {"Id","Nombre", "Correo", "Telefono", "Rol"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+
+        for (Usuario u : listaDeUsuarios) {
+            Object[] fila = {
+                u.getIdUsuario(),
+                u.getNombre(),
+                u.getEmail(),
+                u.getTelefono(),
+                u.getRol(),};
+            modelo.addRow(fila);
+        }
+
+        
+        // para actualizar los datos de la tabla
+        tablaUsuarios.setModel(modelo);
+        
+        //para ocultar visualmente el id
+        tablaUsuarios.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaUsuarios.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaUsuarios.getColumnModel().getColumn(0).setWidth(0);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,9 +102,19 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
         btnEditarUsuario.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         btnEditarUsuario.setText("EDITAR");
+        btnEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarUsuarioActionPerformed(evt);
+            }
+        });
 
         btnEliminarUsuario.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         btnEliminarUsuario.setText("ELIMINAR");
+        btnEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarUsuarioActionPerformed(evt);
+            }
+        });
 
         atrasUsuariosBtn.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         atrasUsuariosBtn.setText("ATRÁS");
@@ -141,13 +184,12 @@ public class AgregarUsuario extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel7))
                                 .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(boxRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtAgregarCorreoUsuario)
-                                        .addComponent(txtAgregarNombreUsuario)
-                                        .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                        .addComponent(txtAgregarNumerTelefono)))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtAgregarCorreoUsuario)
+                                    .addComponent(txtAgregarNombreUsuario)
+                                    .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(txtAgregarNumerTelefono)
+                                    .addComponent(boxRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(0, 26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -236,8 +278,8 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
             // 6. Abrir la ventana de inicio de sesión y cerrar la actual
             
-            InicioDeSesion inicioSesion = new InicioDeSesion();
-            inicioSesion.setVisible(true);
+            VistaAdministrador vistadmin = new VistaAdministrador();
+            vistadmin.setVisible(true);
             this.dispose();
 
         } catch (Exception e) {
@@ -252,6 +294,69 @@ public class AgregarUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
+
+    private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
+        // TODO add your handling code here:
+        
+//        int filaSeleccionada = tablaUsuarios.getSelectedRow();
+//        if (filaSeleccionada == -1) {
+//            JOptionPane.showMessageDialog(this, "Por favor selecciona una tarea para editar.");
+//            return;
+//        }
+//
+//        // Obtener el ID desde la primera columna
+//        int idTarea = Integer.parseInt(tablaUsuarios.getValueAt(filaSeleccionada, 0).toString());
+//
+//        // Buscar la tarea desde la base de datos
+//        UsuarioDAO dao = new UsuarioDAO();
+//        Usuario tareaEncontrada = dao.buscarPorId(idTarea);
+//
+//        // Si la encuentra, abre el formulario con los datos
+//        if (tareaEncontrada != null) {
+//            AgregarUsuario editarForm = new AgregarUsuario(tareaEncontrada);
+//            editarForm.setVisible(true);
+//            this.dispose();
+//        } else {
+//            JOptionPane.showMessageDialog(this, "No se encontró la tarea.");
+//        }
+//    } 
+        
+        
+    }//GEN-LAST:event_btnEditarUsuarioActionPerformed
+
+    private void btnEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioActionPerformed
+        // TODO add your handling code here:
+        
+        
+        int filaSeleccionada = tablaUsuarios.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un usuario para eliminarlo.");
+            return;
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estás seguro de que deseas eliminar a este usuario?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            // Obtener ID oculto del usuario desde la columna 0
+            int idUsuario = (int) tablaUsuarios.getValueAt(filaSeleccionada, 0);
+
+            // Eliminar de la base de datos
+            UsuarioDAO dao = new UsuarioDAO();
+            Usuario usuario = dao.obtenerUsuarioPorId(idUsuario);
+            dao.eliminarUsuario (usuario);
+
+            // Recargar visualmente la tabla
+            cargarListaDeUsuarios();
+
+            JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.");
+        }
+    }//GEN-LAST:event_btnEliminarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

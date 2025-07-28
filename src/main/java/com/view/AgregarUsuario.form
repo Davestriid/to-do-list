@@ -75,14 +75,12 @@
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="boxRol" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtAgregarCorreoUsuario" max="32767" attributes="0"/>
-                                      <Component id="txtAgregarNombreUsuario" max="32767" attributes="0"/>
-                                      <Component id="txtAgregarContrasenaUsuario" alignment="0" pref="200" max="32767" attributes="0"/>
-                                      <Component id="txtAgregarNumerTelefono" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtAgregarCorreoUsuario" max="32767" attributes="0"/>
+                                  <Component id="txtAgregarNombreUsuario" max="32767" attributes="0"/>
+                                  <Component id="txtAgregarContrasenaUsuario" alignment="0" pref="200" max="32767" attributes="0"/>
+                                  <Component id="txtAgregarNumerTelefono" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="boxRol" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -174,6 +172,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="EDITAR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarUsuarioActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminarUsuario">
       <Properties>
@@ -182,6 +183,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="ELIMINAR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarUsuarioActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="atrasUsuariosBtn">
       <Properties>

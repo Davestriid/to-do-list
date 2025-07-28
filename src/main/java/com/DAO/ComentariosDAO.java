@@ -31,7 +31,7 @@ public class ComentariosDAO {
         }
     }
 
-    // para cer todos lo comentarios
+    // para ver todos lo comentarios
     public List<Comentarios> obtenerTodosLosComentarios() {
         EntityManager em = DbManager.getEntityManager();
         try {

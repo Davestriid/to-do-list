@@ -27,8 +27,6 @@ public class UsuarioDAO {
     }
 
     //Crear Usuario
-    
-       
     public void createUsuarioAdmin(String nombre, String email, String telefono, String tipoDeRol, String contraseña) {
 
         EntityManager em = DbManager.getEntityManager();
@@ -68,19 +66,24 @@ public class UsuarioDAO {
     }
 
     //Eliminar Usuario
-    public void eliminarUsuario(Long id) {
+    
+    public void eliminarUsuario(Usuario usuario) {
         EntityManager em = DbManager.getEntityManager();
         try {
-            Usuario tar = em.find(Usuario.class, id);
-            if (tar != null) {
-                em.getTransaction().begin();
-                em.remove(tar);
-                em.getTransaction().commit();
+            em.getTransaction().begin();
+            Usuario usuarioEliminar = em.find(Usuario.class, usuario.getIdUsuario());
+            if (usuarioEliminar != null) {
+                em.remove(usuarioEliminar);
             }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
         } finally {
             em.close();
         }
     }
+
 
     //Buscar un usuario por su nombre
     public Usuario buscarUsuarioPorNombre(String nombreUsuario) throws Exception {
@@ -114,12 +117,38 @@ public class UsuarioDAO {
             }
         }
     }
-
-    public List<Usuario> listarUsuarios() {
+    
+    // para buscar un usuario por su id
+    public Usuario obtenerUsuarioPorId(int id) {
         EntityManager em = DbManager.getEntityManager();
         try {
-            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u", Usuario.class);
-            return query.getResultList();
+            return em.find(Usuario.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+//    public List<Usuario> listarUsuarios() {
+//        EntityManager em = DbManager.getEntityManager();
+//        try {
+//            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u", Usuario.class);
+//            return query.getResultList();
+//        } finally {
+//            em.close();
+//        }
+//    }
+    
+    public List<Usuario> listarUsuarios() {
+        EntityManager em = DbManager.getEntityManager();
+        List<Usuario> tareas = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+        em.close();
+        return tareas;
+    }
+    
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        EntityManager em = DbManager.getEntityManager();
+        try {
+            return em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
         } finally {
             em.close();
         }
