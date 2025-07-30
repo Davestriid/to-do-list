@@ -167,4 +167,29 @@ public class UsuarioDAO {
             em.close();
         }
     }
+    
+   //buscar los roles para precargar los roles luego
+    public List<String> buscarTodosLosRoles() {
+        EntityManager em = DbManager.getEntityManager();
+        try {
+            return em.createQuery("SELECT DISTINCT u.rol FROM Usuario u", String.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }    
+    
+    
+    
+    public Usuario buscarPorId(int id) {
+        EntityManager em = DbManager.getEntityManager();
+        Usuario usuario = null;
+        try {
+            usuario = em.find(Usuario.class, id); 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return usuario;
+    }
 }

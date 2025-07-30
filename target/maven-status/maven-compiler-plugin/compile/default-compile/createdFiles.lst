@@ -1,4 +1,5 @@
 com\view\AgregarEstado$2.class
+com\view\AgregarCategoria$3.class
 com\view\RegistrarUsuario.class
 com\view\VistaAdministrador$1.class
 com\view\AgregarComentario$1.class
@@ -12,7 +13,6 @@ com\view\AgregarCategoria.class
 com\view\AgregarUsuario$4.class
 com\view\AgregarUsuario.class
 com\view\VistaAdministrador$5.class
-com\view\VistaAdministrador$8.class
 com\models\ResumenTareas.class
 com\view\AgregarTarea$2.class
 com\view\VistaAdministrador.class
@@ -45,6 +45,7 @@ com\view\VistaAdministrador$3.class
 com\view\VistaUsuario$3.class
 com\view\RegistrarUsuario$4.class
 com\models\Prioridad.class
+com\view\AgregarUsuario$6.class
 com\view\RegistrarUsuario$1.class
 com\view\AgregarEstado$1.class
 com\view\AgregarComentario$2.class

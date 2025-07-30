@@ -116,4 +116,15 @@ public class CategoriaDAO {
             em.close();
         }
     }
+    
+    
+    //obtener todas las categorias
+    public List<Categoria> obtenerTodasLasCategorias() {
+        EntityManager em = DbManager.getEntityManager();
+        try {
+            return em.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

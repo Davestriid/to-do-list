@@ -45,7 +45,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
         btnVerComentarios = new javax.swing.JButton();
         btnVerUsuarios = new javax.swing.JButton();
         btnEditarTarea = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         txtNumeroDeTareas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,14 +113,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        jButton1.setText("ESTADO");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
+        txtNumeroDeTareas.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         txtNumeroDeTareas.setText(".");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,8 +138,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                                     .addComponent(btnVerComentarios)
                                     .addComponent(btnVerCategorias)
-                                    .addComponent(btnVerUsuarios)
-                                    .addComponent(jButton1))))))
+                                    .addComponent(btnVerUsuarios))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(139, 139, 139)
@@ -168,14 +159,13 @@ public class VistaAdministrador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
+                        .addGap(52, 52, 52)
                         .addComponent(btnVerUsuarios)
                         .addGap(18, 18, 18)
                         .addComponent(btnVerCategorias)
                         .addGap(18, 18, 18)
                         .addComponent(btnVerComentarios)
-                        .addGap(0, 92, Short.MAX_VALUE))
+                        .addGap(0, 85, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,7 +200,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
         
-        
         // para actualizar los datos de la tabla
         tablaTareas.setModel(modelo);
         
@@ -239,7 +228,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
     private void btnVerUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerUsuariosActionPerformed
         // TODO add your handling code here:
-        AgregarUsuario aggUsuario = new AgregarUsuario(); 
+        AgregarUsuario aggUsuario = new AgregarUsuario();
         aggUsuario.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVerUsuariosActionPerformed
@@ -314,12 +303,9 @@ public class VistaAdministrador extends javax.swing.JFrame {
             cargarListaDeTareas();
 
             JOptionPane.showMessageDialog(this, "Tarea eliminada correctamente.");
+            actualizarContadorTareas();
         }
     }//GEN-LAST:event_btnEliminarTareaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,7 +356,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton btnVerCategorias;
     private javax.swing.JButton btnVerComentarios;
     private javax.swing.JButton btnVerUsuarios;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaTareas;

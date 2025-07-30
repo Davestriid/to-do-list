@@ -6,7 +6,10 @@ package com.view;
 
 import com.DAO.UsuarioDAO;
 import com.models.Usuario;
+import com.view.VistaAdministrador;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,12 +25,31 @@ public class AgregarUsuario extends javax.swing.JFrame {
     /**
      * Creates new form AgregarUsuario
      */
+    
+    private Usuario editarUsuarios = null;
+    
     public AgregarUsuario() {
         initComponents();
         cargarListaDeUsuarios();
+        cargarRoles();
     }
+    
+    
+    public AgregarUsuario(Usuario usuario) {
+        initComponents();
+        this.editarUsuarios = usuario;
 
-       
+        cargarListaDeUsuarios();
+        cargarRoles();
+
+        // precargar los campos con los datos de la tarea
+        if (usuario != null) {
+            txtAgregarCorreoUsuario.setText(usuario.getEmail());
+            txtAgregarNombreUsuario.setText(usuario.getNombre());
+            txtAgregarNumeroTelefono.setText(usuario.getTelefono());
+        }
+    }
+    
     private List<Usuario> listaDeUsuarios;
     
     private void cargarListaDeUsuarios() {
@@ -56,6 +78,25 @@ public class AgregarUsuario extends javax.swing.JFrame {
         tablaUsuarios.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaUsuarios.getColumnModel().getColumn(0).setWidth(0);
     }
+    
+    
+    private void cargarRoles() {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        try {
+            List<String> usuarios = usuarioDAO.buscarTodosLosRoles();
+            boxRol.removeAllItems();
+            boxRol.addItem("Seleccionar un Rol");
+            for (String u : usuarios) {
+                boxRol.addItem(u); 
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar categorías: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(AgregarTarea.class.getName()).log(Level.SEVERE, "Error al cargar categorías", e);
+        }
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,7 +109,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         txtAgregarNombreUsuario = new javax.swing.JTextField();
-        btnAgregarUsuario = new javax.swing.JButton();
+        btnNuevoUsuario = new javax.swing.JButton();
         btnEditarUsuario = new javax.swing.JButton();
         btnEliminarUsuario = new javax.swing.JButton();
         atrasUsuariosBtn = new javax.swing.JButton();
@@ -81,9 +122,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtAgregarContrasenaUsuario = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
-        txtAgregarNumerTelefono = new javax.swing.JTextField();
+        txtAgregarNumeroTelefono = new javax.swing.JTextField();
         boxRol = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        btnGuardarCambiosUsuario = new javax.swing.JButton();
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -92,11 +134,11 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jLabel1.setText("USUARIOS");
 
-        btnAgregarUsuario.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        btnAgregarUsuario.setText("AGREGAR");
-        btnAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevoUsuario.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        btnNuevoUsuario.setText("NUEVO USUARIO");
+        btnNuevoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarUsuarioActionPerformed(evt);
+                btnNuevoUsuarioActionPerformed(evt);
             }
         });
 
@@ -150,6 +192,14 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
         jLabel7.setText("Rol");
 
+        btnGuardarCambiosUsuario.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        btnGuardarCambiosUsuario.setText("GUARDAR");
+        btnGuardarCambiosUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCambiosUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,20 +212,11 @@ public class AgregarUsuario extends javax.swing.JFrame {
                         .addGap(114, 114, 114)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(84, 84, 84)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(75, 75, 75)
                                 .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAgregarUsuario)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEditarUsuario)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminarUsuario))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
@@ -184,13 +225,26 @@ public class AgregarUsuario extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel7))
                                 .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtAgregarCorreoUsuario)
-                                    .addComponent(txtAgregarNombreUsuario)
-                                    .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(txtAgregarNumerTelefono)
-                                    .addComponent(boxRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnNuevoUsuario)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtAgregarCorreoUsuario)
+                                        .addComponent(txtAgregarNombreUsuario)
+                                        .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(txtAgregarNumeroTelefono)
+                                        .addComponent(boxRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardarCambiosUsuario)
+                .addGap(12, 12, 12)
+                .addComponent(btnEditarUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminarUsuario)
+                .addGap(85, 85, 85))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,6 +258,11 @@ public class AgregarUsuario extends javax.swing.JFrame {
                         .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditarUsuario)
+                    .addComponent(btnEliminarUsuario)
+                    .addComponent(btnGuardarCambiosUsuario))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
@@ -221,16 +280,13 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtAgregarNumerTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAgregarNumeroTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boxRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarUsuario)
-                    .addComponent(btnEditarUsuario)
-                    .addComponent(btnEliminarUsuario))
+                .addGap(18, 18, 18)
+                .addComponent(btnNuevoUsuario)
                 .addGap(22, 22, 22))
         );
 
@@ -246,13 +302,13 @@ public class AgregarUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_atrasUsuariosBtnActionPerformed
 
-    private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
+    private void btnNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoUsuarioActionPerformed
         // TODO add your handling code here:
 
         // 1. Obtener los datos de los campos de texto:
         String nombreUsuario = txtAgregarNombreUsuario.getText().trim();
         String correoElectronico = txtAgregarCorreoUsuario.getText().trim();
-        String numeroTelefono = txtAgregarNumerTelefono.getText().trim();
+        String numeroTelefono = txtAgregarNumeroTelefono.getText().trim();
         char[] contrasenaChars = txtAgregarContrasenaUsuario.getPassword();
         String tipoDeRol = boxRol.getSelectedItem().toString();
 
@@ -293,35 +349,29 @@ public class AgregarUsuario extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
+    }//GEN-LAST:event_btnNuevoUsuarioActionPerformed
 
     private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
         // TODO add your handling code here:
         
-//        int filaSeleccionada = tablaUsuarios.getSelectedRow();
-//        if (filaSeleccionada == -1) {
-//            JOptionPane.showMessageDialog(this, "Por favor selecciona una tarea para editar.");
-//            return;
-//        }
-//
-//        // Obtener el ID desde la primera columna
-//        int idTarea = Integer.parseInt(tablaUsuarios.getValueAt(filaSeleccionada, 0).toString());
-//
-//        // Buscar la tarea desde la base de datos
-//        UsuarioDAO dao = new UsuarioDAO();
-//        Usuario tareaEncontrada = dao.buscarPorId(idTarea);
-//
-//        // Si la encuentra, abre el formulario con los datos
-//        if (tareaEncontrada != null) {
-//            AgregarUsuario editarForm = new AgregarUsuario(tareaEncontrada);
-//            editarForm.setVisible(true);
-//            this.dispose();
-//        } else {
-//            JOptionPane.showMessageDialog(this, "No se encontró la tarea.");
-//        }
-//    } 
-        
-        
+        int filaSeleccionada = tablaUsuarios.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona un usuario para editar.");
+            return;
+        }
+
+        int idUsuario = Integer.parseInt(tablaUsuarios.getValueAt(filaSeleccionada, 0).toString());
+
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usuarioEncontrado = dao.buscarPorId(idUsuario);
+
+        if (usuarioEncontrado != null) {
+            AgregarUsuario editarUsuarioForm = new AgregarUsuario(usuarioEncontrado);
+            editarUsuarioForm.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró el usuario.");
+        }  
     }//GEN-LAST:event_btnEditarUsuarioActionPerformed
 
     private void btnEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioActionPerformed
@@ -358,12 +408,52 @@ public class AgregarUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarUsuarioActionPerformed
 
+    private void btnGuardarCambiosUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosUsuarioActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            String correo = txtAgregarCorreoUsuario.getText().trim();
+            String nombre = txtAgregarNombreUsuario.getText().trim();
+            String telefono = txtAgregarNumeroTelefono.getText().trim();
+            String rol = (String) boxRol.getSelectedItem();
+
+            if (correo.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || rol == null || rol.equals("Seleccionar un rol")) {
+                JOptionPane.showMessageDialog(this, "Por favor completa todos los campos.");
+                return;
+            }
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+            if (editarUsuarios != null) {
+                
+                // EDITAR usuario existente
+                editarUsuarios.setEmail(correo);
+                editarUsuarios.setNombre(nombre);
+                editarUsuarios.setTelefono(telefono);
+                editarUsuarios.setRol(rol);
+
+                usuarioDAO.actualizarUsuario(editarUsuarios);
+                JOptionPane.showMessageDialog(this, "Usuario actualizado exitosamente.");
+            } else {
+                usuarioDAO.createUsuarioAdmin(nombre, correo, telefono, rol);
+                JOptionPane.showMessageDialog(this, "Usuario creado exitosamente.");
+            }
+
+            new VistaAdministrador().setVisible(true);
+            this.dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar/actualizar usuario: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnGuardarCambiosUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
     /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
      */
@@ -396,9 +486,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasUsuariosBtn;
     private javax.swing.JComboBox<String> boxRol;
-    private javax.swing.JButton btnAgregarUsuario;
     private javax.swing.JButton btnEditarUsuario;
     private javax.swing.JButton btnEliminarUsuario;
+    private javax.swing.JButton btnGuardarCambiosUsuario;
+    private javax.swing.JButton btnNuevoUsuario;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -412,6 +503,6 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtAgregarContrasenaUsuario;
     private javax.swing.JTextField txtAgregarCorreoUsuario;
     private javax.swing.JTextField txtAgregarNombreUsuario;
-    private javax.swing.JTextField txtAgregarNumerTelefono;
+    private javax.swing.JTextField txtAgregarNumeroTelefono;
     // End of variables declaration//GEN-END:variables
 }
