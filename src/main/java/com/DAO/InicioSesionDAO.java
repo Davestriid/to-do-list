@@ -43,4 +43,27 @@ public class InicioSesionDAO {
             }
         }
     }
+    public boolean esAdministrador(String nombreUsuario) {
+        try {
+            this.em = DbManager.getEntityManager();
+
+            TypedQuery<String> query = this.em.createQuery(
+                "SELECT u.rol FROM Usuario u WHERE u.nombre = :nombre", String.class);
+            query.setParameter("nombre", nombreUsuario);
+
+            String rol = query.getSingleResult();
+
+            return rol != null && rol.equalsIgnoreCase("administrador");
+
+        } catch (NoResultException e) {
+            return false; // Usuario no encontrado
+        } catch (Exception e) {
+            System.err.println("Error al verificar rol: " + e.getMessage());
+            return false;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 }

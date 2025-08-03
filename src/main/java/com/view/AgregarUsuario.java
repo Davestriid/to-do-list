@@ -47,7 +47,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
             txtAgregarCorreoUsuario.setText(usuario.getEmail());
             txtAgregarNombreUsuario.setText(usuario.getNombre());
             txtAgregarNumeroTelefono.setText(usuario.getTelefono());
+            
         }
+        pwdAgregarContrasenaUsuario.setText("");  
+        pwdAgregarContrasenaUsuario.setEnabled(false);
     }
     
     private List<Usuario> listaDeUsuarios;
@@ -120,7 +123,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
-        txtAgregarContrasenaUsuario = new javax.swing.JPasswordField();
+        pwdAgregarContrasenaUsuario = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         txtAgregarNumeroTelefono = new javax.swing.JTextField();
         boxRol = new javax.swing.JComboBox<>();
@@ -193,7 +196,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jLabel7.setText("Rol");
 
         btnGuardarCambiosUsuario.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        btnGuardarCambiosUsuario.setText("GUARDAR");
+        btnGuardarCambiosUsuario.setText("GUARDAR CAMBIOS");
         btnGuardarCambiosUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarCambiosUsuarioActionPerformed(evt);
@@ -230,7 +233,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtAgregarCorreoUsuario)
                                         .addComponent(txtAgregarNombreUsuario)
-                                        .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(pwdAgregarContrasenaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                         .addComponent(txtAgregarNumeroTelefono)
                                         .addComponent(boxRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
@@ -276,7 +279,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtAgregarContrasenaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pwdAgregarContrasenaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -309,14 +312,15 @@ public class AgregarUsuario extends javax.swing.JFrame {
         String nombreUsuario = txtAgregarNombreUsuario.getText().trim();
         String correoElectronico = txtAgregarCorreoUsuario.getText().trim();
         String numeroTelefono = txtAgregarNumeroTelefono.getText().trim();
-        char[] contrasenaChars = txtAgregarContrasenaUsuario.getPassword();
+        char[] contrasenaChars = pwdAgregarContrasenaUsuario.getPassword();
         String tipoDeRol = boxRol.getSelectedItem().toString();
 
         // 2. Revisar si algún campo está vacío (esto es básico para que no guardes datos en blanco)
-        if (nombreUsuario.isEmpty() || correoElectronico.isEmpty() || numeroTelefono.isEmpty() || tipoDeRol.isEmpty() || contrasenaChars.length == 0) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+        if (nombreUsuario.isEmpty() || correoElectronico.isEmpty() || numeroTelefono.isEmpty()
+                || contrasenaChars.length == 0 || tipoDeRol.equalsIgnoreCase("Seleccionar un Rol")) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos y seleccione un rol válido.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
             java.util.Arrays.fill(contrasenaChars, ' ');
-            return; // Detiene la ejecución aquí
+            return;
         }
         String contrasenaString = new String(contrasenaChars);
 
@@ -332,16 +336,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
             // 5. Si todo salió bien, mostrar un mensaje de éxito
             JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            // 6. Abrir la ventana de inicio de sesión y cerrar la actual
-            
-            VistaAdministrador vistadmin = new VistaAdministrador();
-            vistadmin.setVisible(true);
-            this.dispose();
+            cargarListaDeUsuarios();
 
         } catch (Exception e) {
-            // 7. Si hubo un error (como que el correo ya existe, por tu base de datos)
             String mensajeError = "Error al registrar usuario.";
-            // Mensaje más específico si es por un correo duplicado (debido a la restricción UNIQUE de tu BD)
             if (e.getMessage() != null && e.getMessage().contains("ConstraintViolationException")) {
                 mensajeError = "El correo electrónico ingresado ya está registrado.";
             } else {
@@ -376,8 +374,6 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
     private void btnEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioActionPerformed
         // TODO add your handling code here:
-        
-        
         int filaSeleccionada = tablaUsuarios.getSelectedRow();
 
         if (filaSeleccionada == -1) {
@@ -412,13 +408,16 @@ public class AgregarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         try {
-            String correo = txtAgregarCorreoUsuario.getText().trim();
+    String correo = txtAgregarCorreoUsuario.getText().trim();
             String nombre = txtAgregarNombreUsuario.getText().trim();
             String telefono = txtAgregarNumeroTelefono.getText().trim();
+            String contrasena = new String(pwdAgregarContrasenaUsuario.getPassword()).trim();
             String rol = (String) boxRol.getSelectedItem();
 
-            if (correo.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || rol == null || rol.equals("Seleccionar un rol")) {
-                JOptionPane.showMessageDialog(this, "Por favor completa todos los campos.");
+            if (correo.isEmpty() || nombre.isEmpty() || telefono.isEmpty()
+                    || rol == null || rol.trim().equalsIgnoreCase("Seleccionar un Rol")
+                    || (editarUsuarios == null && contrasena.isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Por favor completa todos los campos obligatorios.");
                 return;
             }
 
@@ -432,20 +431,25 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 editarUsuarios.setTelefono(telefono);
                 editarUsuarios.setRol(rol);
 
+                // Actualiza la contraseña sólo si el usuario ingresó una nueva
+                if (!contrasena.isEmpty()) {
+                    editarUsuarios.setContrasena(contrasena);
+                }
+
                 usuarioDAO.actualizarUsuario(editarUsuarios);
                 JOptionPane.showMessageDialog(this, "Usuario actualizado exitosamente.");
             } else {
-                usuarioDAO.createUsuarioAdmin(nombre, correo, telefono, rol);
+                // CREAR usuario nuevo (contraseña obligatoria)
+                usuarioDAO.createUsuarioAdmin(nombre, correo, telefono, rol, contrasena);
                 JOptionPane.showMessageDialog(this, "Usuario creado exitosamente.");
             }
-
-            new VistaAdministrador().setVisible(true);
-            this.dispose();
+            cargarListaDeUsuarios();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar/actualizar usuario: " + e.getMessage());
             e.printStackTrace();
         }
+
     }//GEN-LAST:event_btnGuardarCambiosUsuarioActionPerformed
 
     /**
@@ -499,8 +503,8 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPasswordField pwdAgregarContrasenaUsuario;
     private javax.swing.JTable tablaUsuarios;
-    private javax.swing.JPasswordField txtAgregarContrasenaUsuario;
     private javax.swing.JTextField txtAgregarCorreoUsuario;
     private javax.swing.JTextField txtAgregarNombreUsuario;
     private javax.swing.JTextField txtAgregarNumeroTelefono;

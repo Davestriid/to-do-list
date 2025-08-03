@@ -46,6 +46,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         btnVerUsuarios = new javax.swing.JButton();
         btnEditarTarea = new javax.swing.JButton();
         txtNumeroDeTareas = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,29 +117,31 @@ public class VistaAdministrador extends javax.swing.JFrame {
         txtNumeroDeTareas.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         txtNumeroDeTareas.setText(".");
 
+        jButton1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jButton1.setText("CERRAR SESIÓN");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(238, 238, 238)
-                        .addComponent(jLabel1)
-                        .addGap(0, 399, Short.MAX_VALUE))
+                        .addComponent(txtNumeroDeTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtNumeroDeTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                    .addComponent(btnVerComentarios)
-                                    .addComponent(btnVerCategorias)
-                                    .addComponent(btnVerUsuarios))))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnVerComentarios)
+                            .addComponent(btnVerCategorias)
+                            .addComponent(btnVerUsuarios))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(139, 139, 139)
@@ -148,13 +151,21 @@ public class VistaAdministrador extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addComponent(btnEliminarTarea)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(238, 238, 238)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addGap(21, 21, 21)
                 .addComponent(txtNumeroDeTareas)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +176,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
                         .addComponent(btnVerCategorias)
                         .addGap(18, 18, 18)
                         .addComponent(btnVerComentarios)
-                        .addGap(0, 85, Short.MAX_VALUE))
+                        .addGap(0, 84, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,8 +230,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
     
     
     private void btnFormularioTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormularioTareaActionPerformed
-        // TODO add your handling code here:
-        AgregarTarea aggTarea = new AgregarTarea(); 
+        AgregarTarea aggTarea = new AgregarTarea(true); 
         aggTarea.setVisible(true);
         this.dispose();
     
@@ -307,6 +317,13 @@ public class VistaAdministrador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarTareaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        InicioDeSesion inises = new InicioDeSesion();
+        inises.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -356,6 +373,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton btnVerCategorias;
     private javax.swing.JButton btnVerComentarios;
     private javax.swing.JButton btnVerUsuarios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaTareas;

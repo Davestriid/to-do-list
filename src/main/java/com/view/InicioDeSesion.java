@@ -35,14 +35,14 @@ public class InicioDeSesion extends javax.swing.JFrame {
         txtNombreUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnLogin = new javax.swing.JButton();
+        btnIniciarSesion = new javax.swing.JButton();
         pswContrasena = new javax.swing.JPasswordField();
-        btnSignup = new javax.swing.JButton();
+        btnRegistrarse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jLabel1.setText("LOGIN");
+        jLabel1.setText("INICIAR SESION");
 
         txtNombreUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,19 +54,19 @@ public class InicioDeSesion extends javax.swing.JFrame {
 
         jLabel3.setText("Contraseña");
 
-        btnLogin.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        btnLogin.setText("LOGIN");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnIniciarSesion.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        btnIniciarSesion.setText("INICAR SESION");
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnIniciarSesionActionPerformed(evt);
             }
         });
 
-        btnSignup.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        btnSignup.setText("SIGN UP");
-        btnSignup.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarse.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        btnRegistrarse.setText("REGISTRARSE");
+        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSignupActionPerformed(evt);
+                btnRegistrarseActionPerformed(evt);
             }
         });
 
@@ -78,31 +78,30 @@ public class InicioDeSesion extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pswContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(txtNombreUsuario))))
-                .addContainerGap(58, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(140, 140, 140))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(pswContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addComponent(txtNombreUsuario)))
+                        .addContainerGap(58, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnIniciarSesion)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRegistrarse)
+                        .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -111,11 +110,11 @@ public class InicioDeSesion extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(pswContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(22, 96, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSignup))
+                            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegistrarse))
                         .addGap(34, 34, 34))))
         );
 
@@ -126,15 +125,17 @@ public class InicioDeSesion extends javax.swing.JFrame {
     private void txtNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreUsuarioActionPerformed
-
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    public boolean administrador = false;
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
     // TODO add your handling code here:
     // Obtener los datos ingresados por el usuario desde los campos de texto
+    
             String nombreUsuario = txtNombreUsuario.getText();
             String contrasena = new String(pswContrasena.getPassword());
-
-            // Crear una instancia de la clase DAO
             InicioSesionDAO inicioSesionDAO = new InicioSesionDAO();
+            this.administrador = inicioSesionDAO.esAdministrador(nombreUsuario);
+            // Crear una instancia de la clase DAO
+           
 
             // Llamar al método de autenticación del DAO
             Usuario usuarioAutenticado = inicioSesionDAO.autenticarUsuario(nombreUsuario, contrasena);
@@ -143,11 +144,15 @@ public class InicioDeSesion extends javax.swing.JFrame {
             if (usuarioAutenticado != null ) {
                 // La autenticación fue exitosa
                 JOptionPane.showMessageDialog(this, "¡Bienvenid@, " + usuarioAutenticado.getNombre() + "!");
-                VistaAdministrador listareas = new VistaAdministrador(); 
-                listareas.setVisible(true);
-                this.dispose();
-                // Aquí puedes agregar la lógica para cerrar la ventana de inicio de sesión
-                // y abrir la ventana principal de tu aplicación.
+                if (this.administrador == true){
+                    VistaAdministrador listareas = new VistaAdministrador(); 
+                    listareas.setVisible(true);
+                    this.dispose();
+                } else {
+                    VistaUsuario rgf = new VistaUsuario(); 
+                    rgf.setVisible(true);
+                    this.dispose();
+                }
 
             }else {
             // La autenticación falló
@@ -160,15 +165,15 @@ public class InicioDeSesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos. Te quedan " + (INTENTOS_MAXIMOS - intentosFallidos) + " intentos.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
             }
        }
-    }//GEN-LAST:event_btnLoginActionPerformed
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
-    private void btnSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignupActionPerformed
+    private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
         // TODO add your handling code here:
         
         RegistrarUsuario reg = new RegistrarUsuario(); 
         reg.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnSignupActionPerformed
+    }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,8 +214,8 @@ public class InicioDeSesion extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
-    private javax.swing.JButton btnSignup;
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnRegistrarse;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

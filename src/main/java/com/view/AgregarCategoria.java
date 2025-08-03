@@ -8,6 +8,7 @@ import com.DAO.CategoriaDAO;
 import com.models.Categoria;
 import com.models.Tarea;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +25,14 @@ public class AgregarCategoria extends javax.swing.JFrame {
         cargarListaDeCategorias();
     }
 
+    private Categoria categoriaEditada;
+
+    public AgregarCategoria(Categoria categoria) {
+        initComponents();
+        this.categoriaEditada = categoria;
+        txtNuevaCategoria.setText(categoria.getNombreCategoria());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +40,7 @@ public class AgregarCategoria extends javax.swing.JFrame {
      */
     
     private List<Categoria> listaDeCategorias;
-    private void cargarListaDeCategorias() {
+        private void cargarListaDeCategorias() {
         CategoriaDAO dao = new CategoriaDAO();
         this.listaDeCategorias = dao.obtenerTodasLasCategorias(); 
 
@@ -63,12 +72,13 @@ public class AgregarCategoria extends javax.swing.JFrame {
         atrasCategoriaBtn = new javax.swing.JButton();
         txtNuevaCategoria = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        btnAgregarCategoria = new javax.swing.JButton();
+        btnGuardarCambiosCategorias = new javax.swing.JButton();
         btnEditarCategoria = new javax.swing.JButton();
         btnEliminarCategoria = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCategorias = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
+        btnAgregarNuevaCategoria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,19 +95,29 @@ public class AgregarCategoria extends javax.swing.JFrame {
 
         jLabel3.setText("Nueva Categoría");
 
-        btnAgregarCategoria.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        btnAgregarCategoria.setText("AGREGAR");
-        btnAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardarCambiosCategorias.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        btnGuardarCambiosCategorias.setText("GUARGDAR CAMBIOS");
+        btnGuardarCambiosCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarCategoriaActionPerformed(evt);
+                btnGuardarCambiosCategoriasActionPerformed(evt);
             }
         });
 
         btnEditarCategoria.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         btnEditarCategoria.setText("EDITAR");
+        btnEditarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarCategoriaActionPerformed(evt);
+            }
+        });
 
         btnEliminarCategoria.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         btnEliminarCategoria.setText("ELIMINAR");
+        btnEliminarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarCategoriaActionPerformed(evt);
+            }
+        });
 
         tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,37 +135,49 @@ public class AgregarCategoria extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         jLabel4.setText("NUEVA CATEGORÍA");
 
+        btnAgregarNuevaCategoria.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        btnAgregarNuevaCategoria.setText("AGREGAR CATEGORÍA");
+        btnAgregarNuevaCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarNuevaCategoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(atrasCategoriaBtn)
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(27, 27, 27)
-                                .addComponent(txtNuevaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(90, 90, 90)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAgregarCategoria)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEditarCategoria)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminarCategoria)))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addComponent(btnGuardarCambiosCategorias)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditarCategoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminarCategoria))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(atrasCategoriaBtn)
+                            .addGap(61, 61, 61)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(22, 22, 22)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(117, 117, 117)
+                            .addComponent(btnAgregarNuevaCategoria))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(55, 55, 55)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(txtNuevaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(90, 90, 90)
+                                    .addComponent(jLabel4))))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,18 +191,20 @@ public class AgregarCategoria extends javax.swing.JFrame {
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarCambiosCategorias)
+                    .addComponent(btnEditarCategoria)
+                    .addComponent(btnEliminarCategoria))
+                .addGap(29, 29, 29)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNuevaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarCategoria)
-                    .addComponent(btnEditarCategoria)
-                    .addComponent(btnEliminarCategoria))
-                .addGap(29, 29, 29))
+                .addGap(18, 18, 18)
+                .addComponent(btnAgregarNuevaCategoria)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -185,12 +219,119 @@ public class AgregarCategoria extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_atrasCategoriaBtnActionPerformed
 
-    private void btnAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCategoriaActionPerformed
+    private void btnGuardarCambiosCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosCategoriasActionPerformed
+        // TODO add your handling code here:
+
+        if (categoriaEditada == null) {
+            JOptionPane.showMessageDialog(this, "No hay ninguna categoría en edición.");
+            return;
+        }
+
+        String nuevoNombre = txtNuevaCategoria.getText().trim();
+        if (nuevoNombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío.");
+            return;
+        }
+
+        categoriaEditada.setNombreCategoria(nuevoNombre);
+
+        CategoriaDAO dao = new CategoriaDAO();
+        try {
+            dao.actualizarCategoria(categoriaEditada);
+            JOptionPane.showMessageDialog(this, "Categoría actualizada correctamente.");
+            new AgregarCategoria().setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar la categoría:\n" + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnGuardarCambiosCategoriasActionPerformed
+
+    private void btnAgregarNuevaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarNuevaCategoriaActionPerformed
         // TODO add your handling code here:
         
+        String nombreCategoria = txtNuevaCategoria.getText().trim();
+       
+
+        if (nombreCategoria.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
-        
-    }//GEN-LAST:event_btnAgregarCategoriaActionPerformed
+        CategoriaDAO usuarioDAO = new CategoriaDAO();
+
+        try {
+            usuarioDAO.createCategoria(nombreCategoria);
+
+            JOptionPane.showMessageDialog(this, "Categoria registrada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            txtNuevaCategoria.setText("");
+            cargarListaDeCategorias();
+
+        } catch (Exception e) {
+            String mensajeError = "Error al crear categoria.";
+            if (e.getMessage() != null && e.getMessage().contains("ConstraintViolationException")) {
+            } else {
+                mensajeError += "\nDetalle: " + e.getMessage(); // Muestra el error técnico para que lo veas
+            }
+            JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAgregarNuevaCategoriaActionPerformed
+
+    private void btnEliminarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCategoriaActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaCategorias.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una categoria para eliminarla.");
+            return;
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estás seguro de que deseas eliminar a esta categoria?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            // Obtener ID oculto del usuario desde la columna 0
+            int idUsuario = (int) tablaCategorias.getValueAt(filaSeleccionada, 0);
+
+            // Eliminar de la base de datos
+            CategoriaDAO dao = new CategoriaDAO();
+            Categoria categoria = dao.obtenerCategoriaPorId(idUsuario);
+            dao.eliminarCategoria (categoria);
+
+            // Recargar visualmente la tabla
+            cargarListaDeCategorias();
+
+            JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.");
+        }
+    }//GEN-LAST:event_btnEliminarCategoriaActionPerformed
+
+    private void btnEditarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarCategoriaActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tablaCategorias.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona una categoría para editar.");
+            return;
+        }
+
+        int idCategoria = Integer.parseInt(tablaCategorias.getValueAt(filaSeleccionada, 0).toString());
+
+        CategoriaDAO dao = new CategoriaDAO();
+        Categoria categoriaEncontrada = dao.obtenerCategoriaPorId(idCategoria); // ← usa el método correcto
+
+        if (categoriaEncontrada != null) {
+            AgregarCategoria editarCategoriaForm = new AgregarCategoria(categoriaEncontrada);
+            editarCategoriaForm.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró la categoría.");
+        }
+
+    }//GEN-LAST:event_btnEditarCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,9 +370,10 @@ public class AgregarCategoria extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasCategoriaBtn;
-    private javax.swing.JButton btnAgregarCategoria;
+    private javax.swing.JButton btnAgregarNuevaCategoria;
     private javax.swing.JButton btnEditarCategoria;
     private javax.swing.JButton btnEliminarCategoria;
+    private javax.swing.JButton btnGuardarCambiosCategorias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

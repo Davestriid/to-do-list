@@ -61,11 +61,15 @@ public class TareaDAO {
     // para poder ver todas las tareas
     public List<Tarea> obtenerTodasLasTareas() {
         EntityManager em = DbManager.getEntityManager();
-        try {
-            return em.createQuery("SELECT t FROM Tarea t", Tarea.class).getResultList();
-        } finally {
-            em.close();
+        List<Tarea> tareas = em.createQuery("SELECT t FROM Tarea t", Tarea.class).getResultList();
+
+        // Forzar la carga de comentariosList dentro de la sesión abierta
+        for (Tarea t : tareas) {
+            t.getComentariosList().size();  // ⚠️ Esto inicializa la colección Lazy
         }
+
+        em.close();
+        return tareas;
     }
     
     // para buscar una tarea por su id

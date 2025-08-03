@@ -45,7 +45,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jLabel1.setText("SIGN UP");
+        jLabel1.setText("REGISTRARSE");
 
         txtRegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,7 +54,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         });
 
         btnRegistrarse.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        btnRegistrarse.setText("SIGN UP");
+        btnRegistrarse.setText("REGISTRARSE");
         btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarseActionPerformed(evt);
@@ -91,27 +91,28 @@ public class RegistrarUsuario extends javax.swing.JFrame {
                 .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabel1))
+                        .addComponent(btnRegistrarse)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3))
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtRegistrarCorreo)
-                            .addComponent(txtRegistrarUsuario)
-                            .addComponent(txtRegistrarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(txtRegistrarNumeroTelefono))))
-                .addGap(30, 30, 30))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRegistrarse)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(83, 83, 83))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(96, 96, 96)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtRegistrarCorreo)
+                                    .addComponent(txtRegistrarUsuario)
+                                    .addComponent(txtRegistrarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(txtRegistrarNumeroTelefono))))
+                        .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,6 +169,10 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         }
         String contrasena = new String(contrasenaChars);
         java.util.Arrays.fill(contrasenaChars, ' '); // Limpia después de la conversión
+        if (contrasena.length() < 4) {
+            JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 4 caracteres.", "Contraseña débil", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         // 3. Crear una instancia de tu "UsuarioDAO"
         UsuarioDAO usuarioDAO = new UsuarioDAO();

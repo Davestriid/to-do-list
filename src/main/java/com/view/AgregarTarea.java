@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+
 /**
  *
  * @author Davestriid
@@ -29,9 +30,10 @@ public class AgregarTarea extends javax.swing.JFrame {
      */
     
     private Tarea editarTarea = null; 
-   
-    public AgregarTarea() {
+    private boolean esAdministrador = false;
+    public AgregarTarea(boolean administrador) {
         initComponents();
+        this.esAdministrador = administrador;
         txtAgregarTituloTarea.requestFocus();
         cargarCategorias();
         cargarPrioridades();
@@ -272,10 +274,15 @@ public class AgregarTarea extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAgregarTituloTareaActionPerformed
 
     private void btnCancelarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarTareaActionPerformed
-        // TODO add your handling code here:
-        VistaAdministrador tareasList = new VistaAdministrador();
-        tareasList.setVisible(true);
-        this.dispose();
+        if (esAdministrador == true){
+            VistaAdministrador tareasList = new VistaAdministrador();
+            tareasList.setVisible(true);
+            this.dispose();
+        } else {
+            VistaUsuario tareasList = new VistaUsuario();
+            tareasList.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCancelarTareaActionPerformed
 
     private void btnGuardarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTareaActionPerformed
@@ -321,7 +328,7 @@ public class AgregarTarea extends javax.swing.JFrame {
                 new TareaDAO().actualizarTarea(editarTarea);
                 JOptionPane.showMessageDialog(this, "Tarea actualizada exitosamente.");
             } else {
-                // Nueva tarea
+                // Nueva tareax
                 Tarea nuevaTarea = new Tarea();
                 nuevaTarea.setTitulo(titulo);
                 nuevaTarea.setDescripcion(descripcion);
@@ -334,8 +341,15 @@ public class AgregarTarea extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Tarea guardada exitosamente.");
             }
 
-            new VistaAdministrador().setVisible(true);
-            this.dispose();
+            if (esAdministrador == true) {
+                VistaAdministrador tareasList = new VistaAdministrador();
+                tareasList.setVisible(true);
+                this.dispose();
+            } else {
+                VistaUsuario tareasList = new VistaUsuario();
+                tareasList.setVisible(true);
+                this.dispose();
+            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar/actualizar tarea: " + e);
@@ -374,7 +388,7 @@ public class AgregarTarea extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarTarea().setVisible(true);
+                new AgregarTarea(true).setVisible(true);
             }
         });
     }

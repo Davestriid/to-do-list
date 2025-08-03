@@ -40,35 +40,39 @@ public class CategoriaDAO {
     }
     
     //Edita Categorias
-    public String actualizarCategoria(Categoria Categoria){
-        EntityManager em = DbManager.getEntityManager();
-        try{
-            em.getTransaction().begin();
-            em.merge(Categoria);
-            em.getTransaction().commit();
-            return "Categoria actualizada correctamente";
-        }catch(Exception e){
-            em.getTransaction().rollback();
-            return "Error al actualizar la Categoria";
-        }finally{
-        em.close();
-        }
-    }
-    
-    //Eliminar Categoria
-    public void eliminarCategoria(Long id) {
+    public String actualizarCategoria(Categoria categoria) {
         EntityManager em = DbManager.getEntityManager();
         try {
-            Categoria tar = em.find(Categoria.class, id);
-            if (tar != null) {
-                em.getTransaction().begin();
-                em.remove(tar);
-                em.getTransaction().commit();
-            }
+            em.getTransaction().begin();
+            em.merge(categoria); // Asegúrate que el objeto es gestionado
+            em.getTransaction().commit();
+            return "Categoría actualizada correctamente";
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            return "Error al actualizar la categoría: " + e.getMessage(); // Mejora para ver el detalle
         } finally {
             em.close();
         }
     }
+
+    
+    //Eliminar Categoria
+    public void eliminarCategoria(Categoria categoria) {
+        EntityManager em = DbManager.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Categoria gestionada = em.merge(categoria);
+            em.remove(gestionada);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Error al eliminar la categoría", e);
+        } finally {
+            em.close();
+        }
+    }
+
+
     
     //Buscar una categoria por su nombre
     public Categoria buscarCategoriaPorNombre(String nombreCategoria) throws Exception {
@@ -122,9 +126,29 @@ public class CategoriaDAO {
     public List<Categoria> obtenerTodasLasCategorias() {
         EntityManager em = DbManager.getEntityManager();
         try {
-            return em.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
+            List<Categoria> categorias = em.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
+            System.out.println("CATEGORÍAS ENCONTRADAS: " + categorias.size());
+            return categorias;
         } finally {
             em.close();
         }
+    }
+
+    
+    public Categoria obtenerCategoriaPorId(int id_categoria) {
+        EntityManager em = DbManager.getEntityManager();
+        Categoria categoria = null;
+
+        try {
+            categoria = em.find(Categoria.class, id_categoria);
+        } catch (Exception e) {
+            System.err.println("Error al buscar la categoría por ID: " + e.getMessage());
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+
+        return categoria;
     }
 }

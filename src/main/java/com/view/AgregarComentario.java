@@ -30,20 +30,20 @@ public class AgregarComentario extends javax.swing.JFrame {
      */
     
     private List<Comentarios> listaDeComentarios;
-    private void cargarListaDeComentarios() {
+        private void cargarListaDeComentarios() {
         ComentariosDAO dao = new ComentariosDAO();
         this.listaDeComentarios = dao.obtenerTodosLosComentarios(); 
 
-        String[] columnas = {"ID","Comentario","Fecha","Tarea","Usuario"};
+        String[] columnas = {"ID","Tarea","Usuario","Fecha","Comentario"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
 
         for (Comentarios c : listaDeComentarios) {
             Object[] fila = {
                 c.getIdComentario(),
-                c.getComentario(),
-                c.getFechaComentario(),
                 c.getIdTarea().getTitulo(),
-                c.getIdUsuario().getNombre()
+                c.getIdUsuario().getNombre(),
+                c.getFechaComentario(),
+                c.getComentario()
             };
             modelo.addRow(fila);
         }
